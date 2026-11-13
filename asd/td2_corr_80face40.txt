@@ -1,0 +1,302 @@
+//  A  |1   2  |
+//     |3   4  |
+
+//  H  |0.9 0.8|
+//     |0.7 0.6|
+
+//  B  |1   2  0.9 0.8 |
+//     |3   4  0.7 0.6 |
+
+// MaxMin |2 0.8|
+//	  |4 0.6|
+
+ALGORITHME EX1
+VARIABLES
+A,H : tableau[1..10, 1..10] de réel
+B  : tableau[1..10, 1..20] de réel
+MaxMin : tableau[1..10, 1..2] de réel
+i, j, N, min, max : entier
+Début
+Répéter
+Lire(N)
+jusqu’à (N>=2 et N<=10)
+
+pour i de 1 à N faire
+ pour j de 1 à N faire
+  Lire(A[i,j])
+ Fin pour
+Fin pour
+
+pour i de 1 à N faire
+ pour j de 1 à N faire
+  H[i,j] <- 1/(i+j-1)
+ Fin pour
+Fin pour
+
+pour i de 1 à N faire
+ pour j de 1 à N faire
+  B[i,j]<- A[i,j]
+ Fin pour
+ pour j de 1 à N faire
+  B[i,(N)+j]<- H[i,j]
+ Fin pour
+Fin pour
+
+
+
+pour i de 1 à N faire
+ max <- B[i,1]
+ min <- B[i,1]
+
+ pour j de 1 à N faire
+	Si B[i,j] > max alors
+	   max <- B[i,j]
+	Fin Si
+        Si B[i,j] < min alors
+	   min <- B[i,j]
+	Fin Si
+ Fin Pour
+ MaxMin[i,1] <- max
+ MaxMin[i,2] <- min
+Fin Pour
+
+Fin
+
+// N 4
+
+// B  1 2  3 4 5 6 7 8
+
+
+///////////////////////////////
+
+
+ALGORITHME EX2
+VARIABLES
+T : tableau[1..100] de entier
+i, j, N, M : entier
+Début
+
+Répéter
+Lire(M)
+jusqu’à (M>=0 et M<=100)
+
+Répéter
+Lire(N)
+jusqu’à (N>=0 et N<M)
+
+pour i de 1 à N faire
+Lire(T1[i])
+Finpour
+
+pour j de 1 à M faire
+Lire(T2[j])
+Finpour
+
+i <- 1 
+j <- 1
+x <- T1[i]
+tant que (i<=N) et (j<=M) et faire
+Si T2[j] = x alors
+i <- i + 1
+Si i<=N alors
+x <- T1[i]
+fin si
+Fin Si
+j <- j + 1
+fin tant que
+
+Si i > N alors
+ecrire ("Vrai")
+Sinon
+ecrire ("Faux")
+Fin Si
+
+Fin
+
+
+//////////////////////
+
+ALGORITHME EX3
+VARIABLES
+T : tableau[1..100] de entier
+i, N : entier
+Début
+
+Répéter
+Lire(N)
+jusqu’à (N>=0 et N<100) 
+
+pour i de 1 à N faire
+Lire(T[i])
+Finpour
+
+Si (N = 1) alors
+ Ecrire("les valeurs sont consécutifs")
+Sinon
+ i <- 1
+ Tant que (T[i]=T[i+1]+1 et i<=N-1) faire
+  i <- i + 1
+ Fin Tant que
+ Si (i = N) alors
+  Ecrire("les valeurs sont consécutifs")
+ Sinon
+    Ecrire("les valeurs sont non consécutifs")
+ Fin Si
+Fin Si
+Fin
+
+
+
+//////////////////////
+
+ALGORITHME EX4
+VARIABLES
+T1, T2 : tableau[1..100] de entier
+T3, T4 : tableau[1..200] de entier
+i, j, k, N1, N2 : entier
+Début
+trie <- vrai
+répéter
+lire(N1)
+jusqu’à (N1>=0 et N1<100) 
+
+répéter
+lire(N2)
+jusqu’à (N2>=0 et N2<100) 
+
+pour i de 1 à N1 faire
+ lire(T1[i])
+ si(trie=vrai et i>1 et T1[i]<T1[i-1])alors
+  trie <- faux
+ fin si
+fin pour
+
+pour i de 1 à N2 faire
+ lire(T2[i])
+ si(trie=vrai et i>1 et T2[i]<T2[i-1])alors
+ trie <- faux
+ fin si
+fin pour
+
+si (trie=false) alors
+ ecrire("les tableaux ne sont pas triés")
+sinon
+ j <- 1
+ k <- 1
+ pour i de 1 à N1+N2 faire
+  si(T1[j]<=T2[k]) alors
+   T3[i] <- T1[j]
+   ecrire(T3[i])
+   j <- j + 1
+  sinon
+   T3[i] <- T2[k]
+   ecrire(T3[i])
+   k <- k + 1
+  fin si
+ fin pour  
+
+ i <- 1
+ j <- 1
+ k <- 1
+
+ tant que j <= N1 et k <= N2 faire
+  si(T1[j]<=T2[k]) alors
+   si (i = 1 ou T1[j] <> T3[i-1]) alors  
+    T3[i] <- T1[j]
+    ecrire(T3[i])  
+    i <- i + 1
+   fin si 
+   j <- j + 1
+  sinon
+    si (i = 1 ou T1[j] <> T3[i]) alors  
+     T3[i] <- T2[k]
+     ecrire(T3[i])  
+     i <- i + 1
+    fin si
+   k <- k + 1
+  fin si
+ fin tant que
+fin si
+Fin
+
+
+///////////////
+
+ALGORITHME EX5
+VARIABLES
+TV : tableau[1..2, 1..100] de entier
+i, j, N, nbtotal, nbfav, nbdefav, nbsansop : entier
+Début
+
+répéter
+lire(N)
+jusqu’à (N>=0 et N<100) 
+
+
+pour i de 1 à N faire
+ ecrire("donner un avis sur la TV1 puis la TV2 (favorable : taper 1 – défavorable  : taper 2 – sans opinion  : taper 3)")
+ lire(TV[1,i])
+ lire(TV[2,i])
+fin pour
+
+nbfav <- 0
+nbdefav <- 0
+nbsansop <- 0
+
+pour i de 1 à 2 faire
+ pour j de 1 à N faire
+  si (TV[i,j] = 1) alors
+   nbfav <- nbfav +1
+  sinon 
+   si (TV[i,j] = 2) alors
+    nbdefav <- nbdefav + 1 
+   sinon
+    nbsansop <- nbsansop + 1
+   fin si
+  fin si
+ fin pour
+ nbtotal <- nbfav + nbdefav + nbsansop
+ ecrire("TV",i," % favorables ", nbfav/nbtotal, " % défavorables ", nbdefav/nbtotal, " % sans opinion ", nbsansop/nbtotal)
+fin pour
+
+fin
+
+///////////////
+
+ALGORITHME EX6
+VARIABLES
+M : tableau[1..100, 1..4] de entier
+i, , N, nbanim, totalanim, maxnbanim, maxcin : entier
+Début
+
+répéter
+lire(N)
+jusqu’à (N>=0 et N<100) 
+
+
+pour i de 1 à N faire
+ ecrire("donner le num cin, nombre de brebis, nombre de beliers, nombre d'agneaux :")
+ pour j de 1 à 4 faire
+  lire(M[i,j])
+ fin pour
+fin pour
+
+nbanim <- 0
+totalanim <- 0
+maxnbanim <- 0 
+maxcin <- 0
+
+pour i de 1 à N faire
+ pour j de 2 à 4 faire
+  nbanim <- nbanim + M[i,j]
+ fin pour
+ si(nbanim>maxnbanim) alors
+  maxnbanim <- nbanim
+  maxcin <- M[i,1]
+ fin si
+ totalanim <- totalanim + nbanim
+ ecrire("Eleveur",i,": nombre animaux = ",nbanim," % agneaux ", M[i,4]/nbanim)
+fin pour
+ecrire("Le nombre moyen d'animaux = ", totalanim/N)
+ecrire("L'éleveur dont le cin : ", maxcin, " a le plus grand nombre d'animaux = ", maxnbanim)
+fin

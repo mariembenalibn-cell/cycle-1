@@ -1,0 +1,179 @@
+/////////////////// EX8
+Algorithme chaines
+VARIABLES
+M1, M2 : chaine
+A : boolean
+
+Procédure ANAGRAMME (MOT1 : Chaine, MOT2 : Chaine, var ANAG : Booléen)
+Variables
+    i, p : Entier
+    MOT2_COPIE : Chaine
+Début
+    ANAG <- VRAI
+    
+    { Étape 1 : Si les longueurs diffèrent, ce ne sont pas des anagrammes }
+    Si Longueur(MOT1) <> Longueur(MOT2) Alors
+        ANAG <- FAUX
+    Sinon
+        MOT2_COPIE <- MOT2 { Copie de travail pour pouvoir modifier les lettres }
+        i <- 1
+        
+        { Étape 2 : On cherche et on supprime chaque lettre de MOT1 dans MOT2_COPIE }
+        TantQue (i <= Longueur(MOT1)) Et (ANAG = VRAI) Faire
+            p <- Pos(MOT1[i], MOT2_COPIE) { Cherche la position de la lettre }
+            
+            Si p > 0 Alors
+                { Lettre trouvée : on la supprime de la copie pour ne pas la doubler }
+                Effacer(MOT2_COPIE, p, 1)
+                i <- i + 1
+            Sinon
+                { Une lettre de MOT1 est absente de MOT2_COPIE }
+                ANAG <- FAUX
+            FinSi
+        FinTantQue
+    FinSi    
+
+Fin procedure
+
+Debut 
+lire(M1)
+lire(M2)
+ANAGRAMME (M1, M2, A)
+ecrire(A)
+Fin
+
+/////////////////// EX9
+Algorithme Gestion Hotel
+///////// Q1
+Type
+{ Structure représentant un client }
+Personne=enreg
+    numIdentite : Entier
+    nom : Chaine
+    nationalite : Entier { Code de 1 à 30 }
+    age : Entier
+Fenreg
+
+{ Tableau pour les occupants d'une chambre (max 4 places) }
+TableauOccupants = Tableau[1..4] de Personne
+
+{ Structure représentant une chambre }
+Chambre=enreg
+    numero : Entier
+    type : Entier { 1: single, 2: double, 3: triple, 4: quadruple / représente aussi le nombre d'occupants de la chambre si elle n'est pas libre}
+    etat : Booléen     { Vrai: libre, Faux: occupée }
+    occupants : TableauOccupants
+Fenreg
+
+{ Structure globale pour l'hôtel }
+Hotel = Tableau[1..100] de Chambre
+
+
+Variables
+
+/////////  Q2
+
+Fonction NbChambresLibres (H : Hotel, N : Entier) : Entier
+Variables
+    i, compteur : Entier
+Début
+    compteur <- 0
+    Pour i De 1 À N Faire
+        Si H[i].etat = VRAI Alors
+            compteur <- compteur + 1
+        FinSi
+    FinPour
+    NbChambresLibres <- compteur
+Fin
+
+
+//////// Q3
+
+Fonction NbParNationalite (H : Hotel, N : Entier, codeNat : Entier) : Entier
+Variables
+    i, j, compteur : Entier
+Début
+    compteur <- 0
+    Pour i De 1 À N Faire
+        { On ne cherche que dans les chambres occupées }
+        Si H[i].etat = FAUX Alors
+            Pour j De 1 À H[i].type Faire
+                Si H[i].occupants[j].nationalite = codeNat Alors
+                    compteur <- compteur + 1
+                FinSi
+            FinPour
+        FinSi
+    FinPour
+    Retourner(compteur)
+Fin
+
+
+
+///////// Q4
+
+Procédure AfficherEnfantsParNationalite (H : Hotel, N : Entier)
+Variables
+    i, j, nat : Entier
+    CompteursEnfants : Tableau[1..30] de Entier
+Début
+    { Initialisation du tableau de compteurs à 0 }
+    Pour nat De 1 À 30 Faire
+        CompteursEnfants[nat] <- 0
+    FinPour
+
+    { Unique parcours de la structure de l'hôtel }
+    Pour i De 1 À N Faire
+        Si H[i].etat = FAUX Alors
+            Pour j De 1 À H[i].typeChambre Faire
+                { Si c'est un enfant (âge <= 12) }
+                Si H[i].occupants[j].age <= 12 Alors
+                    nat <- H[i].occupants[j].nationalite
+                    CompteursEnfants[nat] <- CompteursEnfants[nat] + 1
+                FinSi
+            FinPour
+        FinSi
+    FinPour
+
+    { Affichage des résultats }
+    Écrire("Nombre d'enfants par nationalité :")
+    Pour nat De 1 À 30 Faire
+        Si CompteursEnfants[nat] > 0 Alors
+            Écrire("Nationalité ", nat, " : ", CompteursEnfants[nat], " enfant(s)")
+        FinSi
+    FinPour
+Fin
+
+//////// Q5
+Fonction NationalitePlusRepresentee (H : Hotel, N : Entier) : Entier
+Variables
+    i, j, nat, maxResidents, natGagnante : Entier
+    CompteursGlobal : Tableau[1..30] de Entier
+Début
+    { Initialisation }
+    Pour nat De 1 À 30 Faire
+        CompteursGlobal[nat] <- 0
+    FinPour
+
+    { Comptage global de tous les résidents }
+    Pour i De 1 À N Faire
+        Si H[i].etat = FAUX Alors
+            Pour j De 1 À H[i].type Faire
+                nat <- H[i].occupants[j].nationalite
+                CompteursGlobal[nat] <- CompteursGlobal[nat] + 1
+            FinPour
+        FinSi
+    FinPour
+
+    { Recherche du maximum dans le tableau de compteurs }
+    maxResidents <- CompteursGlobal[1]
+    natGagnante <- 1
+
+    Pour nat De 2 À 30 Faire
+        Si CompteursGlobal[nat] > maxResidents Alors
+            maxResidents <- CompteursGlobal[nat]
+            natGagnante <- nat
+        FinSi
+    FinPour
+
+    Retourner natGagnante
+Fin

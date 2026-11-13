@@ -1,0 +1,114 @@
+ALGORITHME EX1
+VAR
+T : tableau[1..100] de entier
+i, N : entier
+Début
+
+
+Répéter
+Lire(N)
+jusqu’à (N>0 et N<=100)
+
+
+pour i de 1 à N faire
+Lire(T[i])
+Finpour
+
+
+pour i de 1 à N faire
+Si(T[i] = 0) alors
+Ecrire(i, " ")
+Fin Si
+Finpour
+
+Fin
+
+/////////////////
+
+
+ALGORITHME EX2
+VAR
+T : tableau[1..100] de entier
+i, N, x : entier
+Début
+Répéter
+Lire(N)
+jusqu’à (N>=0 et N<=100)
+pour i de 1 à N faire
+Lire(T[i])
+Finpour
+
+Lire(x)
+//2 8 7 9 
+
+//x 6
+
+i <- 1
+tant que (i <= N et t[i]<> x ) faire
+i <- i + 1
+Fin tant que
+   
+Si (i<=N) alors
+ecrire(i)
+Sinon
+ecrire("0")
+fin si
+
+Fin
+
+
+///////////
+// N 4
+// i 3
+// 9 7 2 1
+// x 4 
+// 9 7 4 2 1
+
+// 9 7 5 4
+// x 3
+// 9 7 5 4 3
+
+ALGORITHME EX3
+VAR
+T : tableau[1..100] de entier
+i, N, x : entier
+Début
+Répéter
+Lire(N)
+jusqu’à (N>=0 et N<100)
+pour i de 1 à N faire
+Lire(T[i])
+Finpour
+
+Lire(x)
+i<-1
+tant que ( i <= N et t[i] > x) faire
+i <- i + 1
+Fin tant que
+
+Si (i<=N) alors
+
+// algo de décalage
+// N 4
+// 9 7 2 1
+// x 4
+// 9 7 4 2 1
+
+//        4   3
+pour k de n à i ,(pas -1) faire
+ t[k+1] <- t[k]
+fin pour
+ t[i] <- x
+Sinon
+//  insérer à la case N + 1  
+// 9 7 2 1 
+// x 0
+// 9 7 2 1 0
+T[N+1] <- x 
+fin si
+// mise à jour de la taille
+N <- N + 1 
+
+Fin
+
+ 

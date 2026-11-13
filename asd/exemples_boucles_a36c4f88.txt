@@ -1,0 +1,64 @@
+Algorithme Somme
+Variables
+i, somme : entier
+Debut
+somme <- 0
+pour i de 1 à 10 faire
+somme <- somme + i
+fin pour
+ecrire(somme)
+Fin
+
+//////////////
+
+Algorithme Somme
+Variables
+i, somme : entier
+Debut
+somme <- 0
+i <- 1
+tant que (i <= 10) faire
+somme <- somme + i
+i <- i + 1
+fin tant que
+ecrire(somme)
+Fin
+
+////////
+
+Algorithme moyenne
+VAR
+i, x, S entier
+Début
+S <- 0
+i <- -1
+x <- 0
+Repeter
+S <- S + x   
+i <- i + 1   
+Lire(x)	     
+Jusqu'à (x < 0)
+Si (i <> 0) alors
+Ecrire("La moyenne est", S/i)
+FinSI
+Fin
+
+/////////
+
+Algorithme moyenne
+VAR
+i, x, S entier
+Début
+S <- 0
+i <- -1
+x <- 0
+tant que (x >= 0)
+S <- S + x
+i <- i + 1
+Lire(x)
+Fin tant que
+Si (i <> 0) alors
+Ecrire("La moyenne est", S/i)
+FinSI
+Fin
+

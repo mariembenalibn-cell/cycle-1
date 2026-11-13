@@ -1,0 +1,120 @@
+ALGORITHME Ex1
+Variables
+x, y, z, temp : entier
+Debut
+
+
+ecrire("Donner x :")
+lire(x)
+
+ecrire("Donner y :")
+lire(y)
+
+ecrire("Donner z :")
+lire(z)
+
+temp <- z
+z <- x
+x <- y
+y <- temp
+
+ecrire("x=", x," y=", y," z=", z )
+Fin
+
+/////////////////
+
+ALGORITHME Ex2
+Constantes
+t1 : réel = 0.7
+t2 : réel = 0.4
+t3 : réel = 0.2
+pj : réel = 100
+ass : réel = 0.3
+tauxTVA : réel = 0.18
+Variables
+nbjours, kilometrage : entier
+locationkm, locationjours : réel
+Debut
+
+ecrire("Donner le kilométrage :")
+lire(kilometrage )
+ecrire("Donner le nombre de jours :")
+lire(nbjours)
+si (kilometrage > 0 et nbjours >0) alors
+ si (kilometrage <= 100) alors
+  locationkm <- kilometrage * t1
+ sinon
+  si (kilometrage <= 1000) alors
+   locationkm <- 100 * t1 + (kilometrage-100) * t2
+  sinon 
+   locationkm <- 100 * t1 + 1000 * t2 + (kilometrage-1000) * t3
+  fin si
+ fin si
+
+ locationkm <- locationkm + (ass * nbjours) +  (locationkm * tauxTVA)
+ locationjours <- (pj * nbjours) 
+ locationjours <- locationjours + (ass * nbjours) +  (locationjours * tauxTVA)
+  
+ si (locationjours > locationkm) alors
+  ecrire("la location par jour est plus profitable !")
+ sinon
+   ecrire("la location par kilomètre est plus profitable !")
+ fin si
+
+sinon 
+ecrire ("une valeur ou plusieurs valeurs sont non valides !")
+fin si
+Fin
+
+/////////////////
+
+ALGORITHME Ex3
+Variables
+c : caractère
+longueur : entier
+maxlongueur : entier
+Debut
+longueur <- 0
+maxlongueur <- 0
+ecrire("Entrez une phrase caractère par caractère se tarminant par #")
+lire(c)
+tant que(c <> '#') faire
+ si (c <> ' ' et c <> ',' et c <> ';' et c <> '.') alors
+  longueur <- longueur +1
+ sinon
+  si(longueur > maxlongueur ) alors
+   maxlongueur <- longueur
+  fin si
+ longueur <- 0
+ fin si
+
+ lire(c)
+fin tant que
+ecrire(maxlongueur)
+Fin
+
+///////////////////////
+
+ALGORITHME Ex4
+Variables
+c : caractère
+longueur, nbmots, nbvoy : entier
+Debut
+longueur <- 0
+nbmots   <- 0
+nbvoy    <- 0
+
+lire(c)
+Si (c <> '.') alors
+ nbmots <- nbmots + 1
+Fin Si
+tant que(c<>'.') faire
+ longueur <- longueur + 1
+ selon(c) faire
+  'a','e','i','o','u','y' : nbvoy <- nbvoy + 1
+  ' ' : nbmots <- nbmots + 1
+ fin selon
+  lire(c)
+fin tant que
+ecrire(longueur, " ; ", nbmots, " ; ",nbvoy)
+Fin

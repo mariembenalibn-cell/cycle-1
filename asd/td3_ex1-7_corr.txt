@@ -1,0 +1,262 @@
+ALGORITHME Ex1
+Variables
+c : caractère
+nbsep, nblet, nbchif, nbcarspe : entier
+
+
+Fonction est_separateur(d:caractère) : boolean
+Variables
+Debut
+si (d <> ' ' et d <> ',' et d <> ';' et d <> '.') alors
+ est_separateur <- Faux
+sinon
+ est_separateur <- Vrai
+Fin Si
+Fin
+
+Fonction est_lettre(d:caractère) : boolean
+Variables
+Debut
+si ((d >= 'a' et d <= 'z') ou (d >= 'A' et d <= 'Z')) alors
+ est_lettre <- Vrai
+sinon
+ est_lettre <- Faux
+Fin Si
+Fin
+
+
+Fonction est_chiffre(d:caractère) : boolean
+Variables
+Debut
+si (d >= '0' et d <= '9') alors
+ est_chiffre <- Vrai
+sinon
+ est_chiffre <- Faux
+Fin Si
+Fin
+
+
+
+Debut
+nbsep <- 0
+nblet <- 0
+nbchif <- 0
+nbcarspe <- 0
+ecrire("Entrez une phrase caractère par caractère se tarminant par #")
+lire(c)
+tant que(c <> '#') faire
+ si (est_separateur(c) = Vrai) alors
+  nbsep <- nbsep + 1
+ sinon
+  si(est_lettre(c) = Vrai ) alors
+   nblet <- nblet + 1
+  sinon
+   si (est_chiffre(c) = Vrai ) alors
+    nbchif <- nbchif + 1
+   sinon 
+    nbcarspe <- nbcarspe + 1
+   fin Si
+  fin si
+ fin si
+ lire(c)
+fin tant que
+ecrire("nbsep : ", nbsep, " nblet : ", nblet, " nbchif : ", nbchif," nbcarspe : ", nbcarspe)
+Fin
+
+//////////////////
+
+Algorithme Ex2
+Constante
+MAX : entier = 100
+Type
+TAB= tableau [1..MAX] de réels
+Variables
+T : TAB
+ pos1 <- 0
+
+// T : 1 9 5 3 4 6 3 2
+// x 3
+// pos1  4
+// pos2  7
+
+Procedure prem-et-dern-positions (T : TAB, N : entier, X : réel ; VAR pos1, pos2 : entier)
+Variables
+i : entier
+
+Debut
+pos1 <- 0
+pos2 <- 0
+Pour i de 1 à N faire
+ si (T[i] = x) alors
+  si pos1 = 0 alors
+   pos1 <- i
+  fin si
+  pos2 <- i
+ fin si
+fin pour
+
+Fin Procedure
+
+// T est trié
+// T : 1 2 3 3 4 5 6 9
+// x 3
+
+Procedure prem_et_dern_positions_tr (T : TAB, N : entier, X : réel ; VAR pos1, pos2 : entier)
+Variables
+i : entier
+
+Debut
+pos1 <- 0
+pos2 <- 0
+
+tant que (T[i] <= x) faire
+ si (T[i] = x) alors
+  si pos1 = 0 alors
+   pos1 <- i
+  fin si
+  pos2 <- i
+ fin si
+fin tant que
+
+Fin Procedure
+
+// T est trié
+       d             f
+// T : 1 2 3 3 4 5 6 9
+// x 7
+
+// T est trié
+// T : 1 1 1 1 1 2 3 3 3 4 4 4 6 6 6 6 6 9
+// x 5
+Procédure chercher_position (T : TAB, N : entier, X : réel ; VAR pos : entier)
+Variables
+    debut, fin, milieu : entier
+Début
+    debut ← 1
+    fin ← N
+    pos ← 0  // Initialisation à 0 (élément non trouvé par défaut)
+    
+    Tant Que (debut ≤ fin) Et (pos = 0) Faire
+        milieu ← (debut + fin) div 2
+        
+        Si T[milieu] = X Alors
+            pos ← milieu  // Élément trouvé, on stocke sa position
+        Sinon Si T[milieu] < X Alors
+            debut ← milieu + 1  // On cherche dans la moitié droite
+        Sinon
+            fin ← milieu - 1    // On cherche dans la moitié gauche
+        Fin Si
+    Fin Tant Que
+Fin Procedure
+
+Debut
+
+Fin 
+
+
+///////////////// EX3
+
+Procédure SEARCH (x : entier, T : Tableau[1..100] de entier, N : entier, var TROUVE : booléen, var POS : entier)
+Variables
+    i : entier
+Début
+    TROUVE <- FAUX
+    POS <- 0
+    i <- 1
+    
+    TantQue (i <= N) Et (TROUVE = FAUX) Faire
+        Si T[i] = x Alors
+            TROUVE <- VRAI
+            POS <- i
+        Sinon
+            i <- i + 1
+        FinSi
+    FinTantQue
+Fin Procedure
+
+////////////////////// EX4
+
+Procédure DELETE (x : entier, var T : Tableau[1..100] de entier, var N : entier, var TROUVE : booléen)
+Variables
+    i, j : entier
+Début
+    TROUVE <- FAUX
+    i <- 1
+    
+    { Étape 1 : Recherche de la première occurrence }
+    TantQue (i <= N) Et (TROUVE = FAUX) Faire
+        Si T[i] = x Alors
+            TROUVE <- VRAI
+        Sinon
+            i <- i + 1
+        FinSi
+    FinTantQue
+    
+    { Étape 2 : Décalage à gauche et mise à jour de la taille }
+    Si TROUVE = VRAI Alors
+        Pour j De i À N - 1 Faire
+            T[j] <- T[j + 1]
+        FinPour
+        N <- N - 1 { Le tableau a maintenant un élément de moins }
+    FinSi
+Fin
+
+////////////////// EX5
+
+Procédure DELETE-ALL (x : Entier, var T : Tableau[1..100] de entier, var N : entier, var TROUVE : Booléen)
+Variables
+    i, j : Entier
+Début
+    TROUVE <- FAUX
+    j <- 1  { Indice pour réécrire les éléments conservés }
+    
+    Pour i De 1 À N Faire
+        Si T[i] = x Alors
+            TROUVE <- VRAI
+        Sinon
+            T[j] <- T[i]
+            j <- j + 1
+        FinSi
+    FinPour
+    
+    Si TROUVE = VRAI Alors
+        N <- j - 1  { Nouvelle taille du tableau après suppressions }
+    FinSi
+Fin
+
+////////////////////// EX6
+
+Procédure CONCAT (T1 : Tableau[1..100] de entier, T2 : Tableau[1..100] de entier, var T3 : Tableau[1..100] de entier, N1 : entier, N2 : entier, var N3 : entier)
+Variables
+    i : entier
+Début
+    N3 <- N1 + N2 { La taille de T3 est la somme des tailles de T1 et T2 }
+    
+    { Étape 1 : Copie des éléments de T1 dans T3 }
+    Pour i De 1 À N1 Faire
+        T3[i] <- T1[i]
+    FinPour
+    
+    { Étape 2 : Copie des éléments de T2 dans T3 juste après ceux de T1 }
+    Pour i De 1 À N2 Faire
+        T3[N1 + i] <- T2[i]
+    FinPour
+Fin
+
+///////////////////// EX7
+
+Fonction OCCUR (x : entier, T : Tableau[1..100] de entier, N : Entier) : Entier
+Variables
+    i, compteur : Entier
+Début
+    compteur <- 0
+    
+    Pour i De 1 À N Faire
+        Si T[i] = x Alors
+            compteur <- compteur + 1
+        FinSi
+    FinPour
+    
+    OCCUR <- compteur
+Fin
+
